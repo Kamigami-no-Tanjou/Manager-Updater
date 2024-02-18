@@ -8,10 +8,12 @@ local http = require('enums.http_facade')
 local logger = require('utils.logger')
 local security = require('utils.security')
 
-local health_use_case = require('use_cases.health')
+local health_use_case = require('use_cases.server.health')
+local get_calendars_use_case = require('use_cases.calendars.get_calendars')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
-    { "/health", http.methods.GET, health_use_case.execute, "health", false }
+    { "/health", http.methods.GET, health_use_case.execute, "health", false },
+    { "/calendars", http.methods.GET, get_calendars_use_case.execute, "get_calendars", false }
 }
 
 function routing.dispatch(request, response)
