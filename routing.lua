@@ -33,7 +33,7 @@ function routing.dispatch(request, response)
             logger.log(logger.levels.INFO, "Attempted to access " .. value[4] .. " route with no authentication")
             response
                     :statusCode(http.codes.UNAUTHORIZED)
-                    :write("{ \"{ \"message\": \"You need to give the API key to access this resource!\" }")
+                    :write("{ \"message\": \"You need to give the API key to access this resource!\" }")
             return
 
         end
