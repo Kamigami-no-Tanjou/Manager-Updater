@@ -5,6 +5,7 @@
 ---
 local json = require('lunajson')
 local connector = require('utils.database_connection')
+local mapper = require('utils.mapper')
 
 local get_calendars = {
     query = [[
@@ -23,27 +24,15 @@ function get_calendars.execute(_, response)
     if not connection then return end
 
     local result = connection:execute(get_calendars.query)
-    calendars = get_calendars.fetch_results(result)
+    calendars = mapper.fetch_results.as_table(result, {
+        id = tonumber,
+        negative_years = tonumber
+    })
 
     response:write(json.encode(calendars))
     result:close()
     connection:close()
     env:close()
-end
-
-function get_calendars.fetch_results(result)
-    local calendars = {}
-    local row = result:fetch({}, "a")
-
-    local i = 1
-    while row do
-        calendars[i] = row
-
-        row = result:fetch({}, "a")
-        i = i + 1
-    end
-
-    return calendars
 end
 
 return get_calendars
