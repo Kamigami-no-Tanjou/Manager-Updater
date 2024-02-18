@@ -9,18 +9,28 @@ local logger = require('utils.logger')
 
 local health_use_case = require('use_cases.health')
 routing.routes = {
-    -- { "path", "http_method", function_to_call, "name" },
-    { "/health", http.methods.GET, health_use_case.execute, "health" }
+    -- { "path", "http_method", function_to_call, "name", requires_authentication },
+    { "/health", http.methods.GET, health_use_case.execute, "health", false }
 }
 
 function routing.dispatch(request, response)
     routing.prepareResponse(response)
 
     for _,value in pairs(routing.routes) do
-        if request:path() == value[1] and request:method() == value[2] then
+        local is_allowed = security.check_key(request, value[5])
+
+        if request:path() == value[1] and request:method() == value[2] and is_allowed then
             logger.log(logger.levels.INFO, "Dispatching received request to endpoint " .. value[4] .. "...")
             value[3](request, response)
             return
+
+        elseif request:path() == value[1] and request:method() == value[2] and not is_allowed then
+            logger.log(logger.levels.INFO, "Attempted to access " .. value[4] .. " route with no authentication")
+            response
+                    :statusCode(http.codes.UNAUTHORIZED)
+                    :write("{ \"{ \"message\": \"You need to give the API key to access this resource!\" }")
+            return
+
         end
     end
 

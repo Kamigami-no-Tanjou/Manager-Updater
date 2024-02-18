@@ -23,3 +23,26 @@ return {
     password = "YourPassword"
 }
 ```
+
+## Key based authentication
+In order to be allowed to perform data-changing actions, you need to be authenticated. As this API
+doesn't have users, a simple API key is set, and configured in the `api_key.lua` configuration file.
+Here is how it is supposed to look like:
+
+```lua
+-- location: @root/config/api_key.lua
+
+return "YOUR_API_SECRET_KEY"
+```
+
+You can set whatever you want here, and there is no encryption nor decryption process, so the key is
+checked as plain text. Therefore, checking whether the user is allowed to perform an action is blazing
+fast, but I'd advise you to set a **very** strong key. That is, a key automatically generated, that
+includes small and capital letters, numbers and special characters as well, and is at the very least
+64 characters long.
+
+> **NOTE:**  
+> In a user based authentication, as you cannot really force your users to use fully secure and
+> unpredictable passwords, encryption with salt and pepper is mandatory in order to keep systems
+> secure. But in our case, we only have one password, and we know it is secure, so there is no real
+> need for any encryption process.
