@@ -6,9 +6,12 @@
 local types_defaults = require('utils.types_default')
 
 charac_event = {
-    profile = {
-        id = tonumber,
-        charac = tonumber
+    properties = {
+        id              = { format = tonumber },
+        starting_date   = { format = tostring },
+        ending_date     = { format = tostring },
+        charac          = { format = tonumber },
+        description     = { format = tostring }
     }
 }
 

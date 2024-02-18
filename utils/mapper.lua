@@ -29,7 +29,7 @@ function mapper.fetch_results.as_object(query_result, prototype)
     local row = query_result:fetch({}, "a")
     local i = 1
     while row do
-        mapper.map(row, prototype.profile or {})
+        mapper.map_object(row, prototype.properties or {})
         output_object[i] = prototype:new(row)
 
         row = query_result:fetch({}, "a")
@@ -42,6 +42,12 @@ end
 function mapper.map(item, profile)
     for prop, apply_map in pairs(profile) do
         item[prop] = apply_map(item[prop])
+    end
+end
+
+function mapper.map_object(item, properties)
+    for key, property in pairs(properties) do
+        item[key] = property.format(item[key])
     end
 end
 
