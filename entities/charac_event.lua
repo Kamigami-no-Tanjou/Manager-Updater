@@ -5,7 +5,12 @@
 ---
 local types_defaults = require('utils.types_default')
 
-charac_event = {}
+charac_event = {
+    profile = {
+        id = tonumber,
+        charac = tonumber
+    }
+}
 
 function charac_event:new(mapped_fields)
     mapped_fields = mapped_fields or {}
