@@ -10,10 +10,12 @@ local security = require('utils.security')
 
 local health_use_case = require('use_cases.server.health')
 local get_calendars_use_case = require('use_cases.calendars.get_calendars')
+local get_charac_events_use_case = require('use_cases.charac_events.get_charac_events')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
-    { "/calendars", http.methods.GET, get_calendars_use_case.execute, "get_calendars", false }
+    { "/calendars", http.methods.GET, get_calendars_use_case.execute, "get_calendars", false },
+    { "/charac-events", http.methods.GET, get_charac_events_use_case.execute, "get_charac_events", false }
 }
 
 function routing.dispatch(request, response)
