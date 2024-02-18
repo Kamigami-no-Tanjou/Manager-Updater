@@ -6,6 +6,7 @@
 local routing = {}
 local http = require('enums.http_facade')
 local logger = require('utils.logger')
+local security = require('utils.security')
 
 local health_use_case = require('use_cases.health')
 routing.routes = {
