@@ -8,7 +8,7 @@ local api_key = require('config.api_key')
 local security = {}
 
 function security.check_key(request, authentication_needed)
-    local given_key = request:headers()["API-KEY"]
+    local given_key = request:headers()["api-key"]
     return (not authentication_needed) or given_key == api_key
 end
 
