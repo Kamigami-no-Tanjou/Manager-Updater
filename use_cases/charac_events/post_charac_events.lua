@@ -38,8 +38,7 @@ function post_charac_events.execute(request, response)
     if not query then return end
 
     -- try to insert into the database
-    if not pcall(function (stm) connection:execute(stm) end, query) then
-        logger.log(logger.levels.DEBUG, "query failed")
+    if not connection:execute(query) then
         post_charac_events.character_not_found(response, connection, env)
         return
     end
