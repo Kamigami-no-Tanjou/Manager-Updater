@@ -8,7 +8,6 @@ local connector = require('utils.database_connection')
 local checker = require('utils.data_checker')
 local http = require('enums.http_facade')
 local prototype = require('entities.charac_event')
-local logger = require('utils.logger')
 local copy = require('utils.copy')
 local escaper = require('utils.extra_function_escape')
 
@@ -42,15 +41,12 @@ function post_charac_events.execute(request, response)
         post_charac_events.character_not_found(response, connection, env)
         return
     end
-    logger.log(logger.levels.DEBUG, "query succeeded")
 
     response
             :statusCode(http.codes.CREATED)
             :sendOnlyHeaders()
     connection:close()
     env:close()
-
-    logger.log(logger.levels.DEBUG, "connection & environment closed")
 end
 
 function post_charac_events.create_query(response, events)
@@ -60,13 +56,10 @@ function post_charac_events.create_query(response, events)
     model.id = nil
 
     for _, event in pairs(events) do
-        logger.log(logger.levels.DEBUG, "checking data compliance")
         if not pcall(checker.ensure_model_compliance, event, model, escaper.apply) then
-            logger.log(logger.levels.DEBUG, "non-compliant data")
             post_charac_events.lacking_data(response, event)
             return nil
         end
-        logger.log(logger.levels.DEBUG, "compliant data")
 
         if not is_first_value then
             query = query .. ", " .. post_charac_events.format_value(event)
@@ -76,7 +69,6 @@ function post_charac_events.create_query(response, events)
         end
     end
 
-    logger.log(logger.levels.DEBUG, query)
     return query
 end
 
@@ -91,7 +83,6 @@ function post_charac_events.format_value(event)
 end
 
 function post_charac_events.lacking_data(response, event)
-    logger.log(logger.levels.DEBUG, "sending error response...")
     response
             :statusCode(http.codes.BAD_REQUEST)
             :write(json.encode({ message = "Detected missing values in this entity", event = event }))
