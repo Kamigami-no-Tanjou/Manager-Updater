@@ -5,7 +5,43 @@
 ---
 local types_default = require('utils.types_default')
 
-charac = {}
+local parse_tastes = function(string_tastes)
+    local tastes = {}
+    local i = 1
+
+    for taste in string.gmatch(string_tastes, "; *") do
+        tastes[i] = taste
+        i = i + 1
+    end
+
+    return tastes
+end
+
+charac = {
+    properties = {
+        id = { format = tonumber },
+        last_names = { format = tostring },
+        first_names = { format = tostring },
+        portrait = { format = tostring },
+        description = { format = tostring },
+        calendar = { format = tonumber },
+        birthdate = { format = tostring },
+        deathdate = { format = tostring },
+        magical_potential = { format = tonumber },
+        class = { format = tonumber },
+        sex = { format = tonumber },
+        gender = { format = tonumber },
+        sexual_orientation = { format = tostring },
+        origin = { format = tonumber },
+        height = { format = tonumber },
+        hair_colour = { format = tostring },
+        eye_colour = { format = tostring },
+        appearance = { format = tostring },
+        favourite_colour = { format = tostring },
+        things_hated = { format = parse_tastes },
+        things_loved = { format = parse_tastes }
+    }
+}
 
 function charac:new(mapped_fields)
     mapped_fields = mapped_fields or {}
