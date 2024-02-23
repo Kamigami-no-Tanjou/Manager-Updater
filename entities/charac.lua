@@ -9,8 +9,9 @@ local parse_tastes = function(string_tastes)
     local tastes = {}
     local i = 1
 
-    for taste in string.gmatch(string_tastes, "; *") do
-        tastes[i] = taste
+    if not string_tastes then return tastes end
+    for taste in string.gmatch(string_tastes, "[^;]+") do
+        tastes[i] = string.gsub(taste, "^%s*(.-)%s*$", "%1")
         i = i + 1
     end
 

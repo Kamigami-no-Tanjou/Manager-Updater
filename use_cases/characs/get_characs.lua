@@ -22,13 +22,13 @@ local get_characs = {
             Class AS class,
             Sex AS sex,
             Gender AS gender,
-            SexualOrientation, sexual_orientation,
+            SexualOrientation AS sexual_orientation,
             Origin AS origin,
             Height AS height,
             HairColour AS hair_colour,
             EyeColour AS eye_colour,
             Appearance AS appearance,
-            FavouriteColour AS favourite_colour,
+            FavoriteColour AS favourite_colour,
             ThingsLoved AS things_loved,
             ThingsHated AS things_hated
         FROM Characs
