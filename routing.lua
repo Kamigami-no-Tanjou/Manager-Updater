@@ -20,6 +20,7 @@ local get_charac_relationships_use_case = require('use_cases.charac_relationship
 -- classes; elems; family_statuses; genders
 local get_classes_use_case = require('use_cases.classes.get_classes')
 local get_elems_use_case = require('use_cases.elems.get_elems')
+local get_family_statuses_use_case = require('use_cases.family_statuses.get_family_statuses')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
@@ -32,6 +33,7 @@ routing.routes = {
     { "/charac-relationships", http.methods.GET, get_charac_relationships_use_case.execute, "get_charac_relationships", false },
     { "/classes", http.methods.GET, get_classes_use_case.execute, "get_classes", false },
     { "/elements", http.methods.GET, get_elems_use_case.execute, "get_elems", false },
+    { "/family-statuses", http.methods.GET, get_family_statuses_use_case.execute, "get_family_statuses", false },
 }
 
 function routing.dispatch(request, response)
