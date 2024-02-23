@@ -5,7 +5,16 @@
 ---
 local types_default = require('utils.types_default')
 
-nation = {}
+nation = {
+    properties = {
+        id = { format = tonumber },
+        name = { format = tostring },
+        calendar = { format =  tonumber },
+        foundation_date = { format = tostring },
+        destruction_date = { format = tostring },
+        description = { format = tostring }
+    }
+}
 
 function nation:new(mapped_fields)
     mapped_fields = mapped_fields or {}

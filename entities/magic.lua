@@ -5,7 +5,13 @@
 ---
 local types_default = require('utils.types_default')
 
-magic = {}
+magic = {
+    properties = {
+        id = { format = tonumber },
+        name = { format = tostring },
+        description = { format = tostring }
+    }
+}
 
 function magic:new(mapped_fields)
     mapped_fields = mapped_fields or {}

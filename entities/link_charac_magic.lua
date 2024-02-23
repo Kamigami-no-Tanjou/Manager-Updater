@@ -5,7 +5,14 @@
 ---
 local types_default = require('utils.types_default')
 
-link_charac_magic = {}
+link_charac_magic = {
+    properties = {
+        id = { format = tonumber },
+        charac = { format = tonumber },
+        magic = { format = tonumber },
+        rank = { format = tonumber }
+    }
+}
 
 function link_charac_magic:new(mapped_fields)
     mapped_fields = mapped_fields or {}

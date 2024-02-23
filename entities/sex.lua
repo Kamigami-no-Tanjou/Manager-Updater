@@ -5,7 +5,12 @@
 ---
 local types_default = require('utils.types_default')
 
-sex = {}
+sex = {
+    properties = {
+        id = { format = tonumber },
+        name = { format = tostring }
+    }
+}
 
 function sex:new(mapped_fields)
     mapped_fields = mapped_fields or {}

@@ -5,7 +5,13 @@
 ---
 local types_default = require('utils.types_default')
 
-link_elem_magic = {}
+link_elem_magic = {
+    properties = {
+        id = { format = tonumber },
+        elem = { format = tonumber },
+        magic = { format = tonumber }
+    }
+}
 
 function link_elem_magic:new(mapped_fields)
     mapped_fields = mapped_fields or {}

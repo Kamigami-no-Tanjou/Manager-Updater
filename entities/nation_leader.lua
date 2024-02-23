@@ -5,7 +5,15 @@
 ---
 local types_default = require('utils.types_default')
 
-nation_leader = {}
+nation_leader = {
+    properties = {
+        id = { format = tonumber },
+        leader = { format = tonumber },
+        nation = { format = tonumber },
+        lead_start_date = { format = tostring },
+        lead_end_date = { format = tostring }
+    }
+}
 
 function nation_leader:new(mapped_fields)
     mapped_fields = mapped_fields or {}

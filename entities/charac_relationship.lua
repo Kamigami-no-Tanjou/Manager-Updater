@@ -5,7 +5,16 @@
 ---
 local types_default = require('utils.types_default')
 
-charac_relationship = {}
+charac_relationship = {
+    properties = {
+        id = { format = tonumber },
+        from_charac = { format = tonumber },
+        towards_charac = { format = tonumber },
+        family_status = { format = tonumber },
+        appreciation = { format = tonumber },
+        history = { format = tostring }
+    }
+}
 
 function charac_relationship:new(mapped_fields)
     mapped_fields = mapped_fields or {}
