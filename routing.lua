@@ -17,6 +17,8 @@ local delete_charac_events_use_case = require('use_cases.charac_events.delete_ch
 local get_characs_use_case = require('use_cases.characs.get_characs')
 -- charac_relationships
 local get_charac_relationships_use_case = require('use_cases.charac_relationships.get_charac_relationships')
+-- classes; elems; family_statuses; genders
+local get_classes_use_case = require('use_cases.classes.get_classes')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
@@ -25,9 +27,9 @@ routing.routes = {
     { "/charac-events", http.methods.POST, post_charac_events_use_case.execute, "post_charac_events", true },
     { "/charac-events", http.methods.PUT, put_charac_events_use_case.execute, "put_charac_events", true },
     { "/charac-events", http.methods.DELETE, delete_charac_events_use_case.execute, "delete_charac_events", true },
-    { "/characs", http.methods.GET, get_characs_use_case.execute, "get_characs", false }
     { "/characs", http.methods.GET, get_characs_use_case.execute, "get_characs", false },
     { "/charac-relationships", http.methods.GET, get_charac_relationships_use_case.execute, "get_charac_relationships", false },
+    { "/classes", http.methods.GET, get_classes_use_case.execute, "get_classes", false },
 }
 
 function routing.dispatch(request, response)
