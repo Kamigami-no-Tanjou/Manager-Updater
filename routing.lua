@@ -29,6 +29,8 @@ local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get
 local get_magics_use_case = require('use_cases.magics.get_magics')
 -- maps
 local get_maps_use_case = require('use_cases.maps.get_maps')
+-- nations
+local get_nations_use_case = require('use_cases.nations.get_nations')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
@@ -47,6 +49,7 @@ routing.routes = {
     { "/link-elems-magics", http.methods.GET, get_links_elems_magics_use_case.execute, "get_links_elems_magics", false },
     { "/magics", http.methods.GET, get_magics_use_case.execute, "get_magics", false },
     { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
+    { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
 }
 
 function routing.dispatch(request, response)
