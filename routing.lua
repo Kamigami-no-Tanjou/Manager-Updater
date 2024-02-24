@@ -23,6 +23,8 @@ local get_elems_use_case = require('use_cases.elems.get_elems')
 local get_family_statuses_use_case = require('use_cases.family_statuses.get_family_statuses')
 local get_genders_use_case = require('use_cases.genders.get_genders')
 local get_links_characs_magics_use_case = require('use_cases.link_characs_magics.get_link_characs_magics')
+-- link_elems_magics
+local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get_link_elems_magics')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
@@ -36,9 +38,9 @@ routing.routes = {
     { "/classes", http.methods.GET, get_classes_use_case.execute, "get_classes", false },
     { "/elements", http.methods.GET, get_elems_use_case.execute, "get_elems", false },
     { "/family-statuses", http.methods.GET, get_family_statuses_use_case.execute, "get_family_statuses", false },
-    { "/genders", http.methods.GET, get_genders_use_case.execute, "get_genders", false }
     { "/genders", http.methods.GET, get_genders_use_case.execute, "get_genders", false },
     { "/link-characs-magics", http.methods.GET, get_links_characs_magics_use_case.execute, "get_links_characs_magics", false },
+    { "/link-elems-magics", http.methods.GET, get_links_elems_magics_use_case.execute, "get_links_elems_magics", false },
 }
 
 function routing.dispatch(request, response)
