@@ -27,6 +27,8 @@ local get_links_characs_magics_use_case = require('use_cases.link_characs_magics
 local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get_link_elems_magics')
 -- magics
 local get_magics_use_case = require('use_cases.magics.get_magics')
+-- maps
+local get_maps_use_case = require('use_cases.maps.get_maps')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
@@ -44,6 +46,7 @@ routing.routes = {
     { "/link-characs-magics", http.methods.GET, get_links_characs_magics_use_case.execute, "get_links_characs_magics", false },
     { "/link-elems-magics", http.methods.GET, get_links_elems_magics_use_case.execute, "get_links_elems_magics", false },
     { "/magics", http.methods.GET, get_magics_use_case.execute, "get_magics", false },
+    { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
 }
 
 function routing.dispatch(request, response)
