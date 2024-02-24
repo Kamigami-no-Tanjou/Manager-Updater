@@ -37,7 +37,7 @@ local get_nation_leaders_uses_case = require('use_cases.nation_leaders.get_natio
 local get_sexes_use_case = require('use_cases.sexes.get_sexes')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
-    { "/health", http.methods.GET, health_use_case.execute, "health", false },
+    { "/health", http.methods.GET, health_use_case.execute, "get_health", false },
     { "/calendars", http.methods.GET, get_calendars_use_case.execute, "get_calendars", false },
     { "/charac-events", http.methods.GET, get_charac_events_use_case.execute, "get_charac_events", false },
     { "/charac-events", http.methods.POST, post_charac_events_use_case.execute, "post_charac_events", true },
