@@ -33,6 +33,8 @@ local get_maps_use_case = require('use_cases.maps.get_maps')
 local get_nations_use_case = require('use_cases.nations.get_nations')
 -- nation_leaders
 local get_nation_leaders_uses_case = require('use_cases.nation_leaders.get_nation_leaders')
+-- sexes
+local get_sexes_use_case = require('use_cases.sexes.get_sexes')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "health", false },
@@ -53,6 +55,7 @@ routing.routes = {
     { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
     { "/nation-leaders", http.methods.GET, get_nation_leaders_uses_case.execute, "get_nation_leaders", false },
+    { "/sexes", http.methods.GET, get_sexes_use_case.execute, "get_sexes", false }
 }
 
 function routing.dispatch(request, response)
