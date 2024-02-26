@@ -18,6 +18,25 @@ local parse_tastes = function(string_tastes)
     return tastes
 end
 
+local compact_tastes = function(table_tastes)
+    if not table_tastes then return nil end
+    local string_tastes
+    local is_first_tatse = true
+
+    for i, taste in pairs(table_tastes) do
+        if i > 3 then break end -- 3 tastes max
+
+        if not is_first_tatse then
+            string_tastes = string_tastes .. "; " .. taste
+        else
+            string_tastes = taste
+            is_first_tatse = false
+        end
+    end
+
+    return string_tastes
+end
+
 charac = {
     properties = {
         id = { format = tonumber },
