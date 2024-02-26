@@ -23,13 +23,13 @@ charac = {
         id = { format = tonumber },
         last_names = { format = tostring },
         first_names = { format = tostring },
-        portrait = { format = tostring },
-        description = { format = tostring },
+        portrait = { format = tostring, nullable = true },
+        description = { format = tostring, nullable = true },
         calendar = { format = tonumber },
         birthdate = { format = tostring },
-        deathdate = { format = tostring },
-        magical_potential = { format = tonumber },
-        class = { format = tonumber },
+        deathdate = { format = tostring, nullable = true },
+        magical_potential = { format = tonumber, nullable = true },
+        class = { format = tonumber, nullable = true },
         sex = { format = tonumber },
         gender = { format = tonumber },
         sexual_orientation = { format = tostring },
@@ -41,6 +41,16 @@ charac = {
         favourite_colour = { format = tostring },
         things_hated = { format = parse_tastes },
         things_loved = { format = parse_tastes }
+        gender = { format = tonumber, nullable = true },
+        sexual_orientation = { format = tostring, nullable = true },
+        origin = { format = tonumber, nullable = true },
+        height = { format = tonumber, nullable = true },
+        hair_colour = { format = tostring, nullable = true },
+        eye_colour = { format = tostring, nullable = true },
+        appearance = { format = tostring, nullable = true },
+        favourite_colour = { format = tostring, nullable = true },
+        things_hated = { format = parse_tastes, nullable = true, prepare = compact_tastes },
+        things_loved = { format = parse_tastes, nullable = true, prepare = compact_tastes }
     }
 }
 
