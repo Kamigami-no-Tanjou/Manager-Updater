@@ -31,16 +31,6 @@ charac = {
         magical_potential = { format = tonumber, nullable = true },
         class = { format = tonumber, nullable = true },
         sex = { format = tonumber },
-        gender = { format = tonumber },
-        sexual_orientation = { format = tostring },
-        origin = { format = tonumber },
-        height = { format = tonumber },
-        hair_colour = { format = tostring },
-        eye_colour = { format = tostring },
-        appearance = { format = tostring },
-        favourite_colour = { format = tostring },
-        things_hated = { format = parse_tastes },
-        things_loved = { format = parse_tastes }
         gender = { format = tonumber, nullable = true },
         sexual_orientation = { format = tostring, nullable = true },
         origin = { format = tonumber, nullable = true },
@@ -51,6 +41,18 @@ charac = {
         favourite_colour = { format = tostring, nullable = true },
         things_hated = { format = parse_tastes, nullable = true, prepare = compact_tastes },
         things_loved = { format = parse_tastes, nullable = true, prepare = compact_tastes }
+    },
+
+    insert_property_order = {
+        "last_names", "first_names", "description", "calendar", "birthdate", "deathdate", "magical_potential", "class",
+        "sex", "gender", "sexual_orientation", "origin", "height", "hair_colour", "eye_colour", "appearance",
+        "favourite_colour", "things_loved", "things_hated"
+    },
+
+    update_property_order = {
+        "id", "last_names", "first_names", "description", "calendar", "birthdate", "deathdate", "magical_potential",
+        "class", "sex", "gender", "sexual_orientation", "origin", "height", "hair_colour", "eye_colour", "appearance",
+        "favourite_colour", "things_loved", "things_hated"
     }
 }
 

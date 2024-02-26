@@ -12,6 +12,14 @@ charac_event = {
         ending_date     = { format = tostring },
         charac          = { format = tonumber },
         description     = { format = tostring }
+    },
+
+    insert_property_order = {
+        "starting_date", "ending_date", "charac", "description"
+    },
+
+    update_property_order = {
+        "id", "starting_date", "ending_date", "charac", "description"
     }
 }
 
