@@ -6,10 +6,12 @@
 return function(value)
     local sql_value
 
-    if type(value) == "string" and value == "%NULL%" then
+    if not value or (type(value) == "string" and value == "%NULL%") then
         sql_value = "NULL"
     elseif type(value) == "string" then
         sql_value = string.format("'%s'", value)
+    else
+        sql_value = value
     end
 
     return sql_value
