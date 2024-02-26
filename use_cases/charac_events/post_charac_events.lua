@@ -5,11 +5,10 @@
 ---
 local json = require('lunajson')
 local connector = require('utils.database_connection')
-local checker = require('utils.data_checker')
 local http = require('enums.http_facade')
 local prototype = require('entities.charac_event')
-local copy = require('utils.copy')
 local escaper = require('utils.extra_function_escape')
+local query_builder = require('utils.query_builder')
 
 local post_charac_events = {
     query = [[
@@ -24,7 +23,7 @@ local post_charac_events = {
 
     ]],
 
-    value = "('%s', '%s', %s, '%s')"
+    value = "(%s, %s, %s, %s)"
 }
 
 function post_charac_events.execute(request, response)
@@ -33,9 +32,18 @@ function post_charac_events.execute(request, response)
     escaper.set_connection(connection)
 
     local new_events = json.decode(request:receiveBody())
-    local query = post_charac_events.create_query(response, new_events)
-    if not query then return end
+    local query = query_builder.create_insert_query(
+            post_charac_events.query,
+            post_charac_events.value,
+            prototype,
+            new_events,
+            escaper
+    )
 
+    if type(query) ~= "string" then
+        post_charac_events.lacking_data(response, query, connection, env)
+        return
+    end
     -- try to insert into the database
     if not connection:execute(query) then
         post_charac_events.character_not_found(response, connection, env)
@@ -45,54 +53,24 @@ function post_charac_events.execute(request, response)
     response
             :statusCode(http.codes.CREATED)
             :sendOnlyHeaders()
-    connection:close()
-    env:close()
+    post_charac_events.close(connection, env)
 end
 
-function post_charac_events.create_query(response, events)
-    local query = post_charac_events.query
-    local is_first_value = true
-    local model = copy(prototype.properties)
-    model.id = nil
-
-    for _, event in pairs(events) do
-        if not pcall(checker.ensure_model_compliance, event, model, escaper.apply) then
-            post_charac_events.lacking_data(response, event)
-            return nil
-        end
-
-        if not is_first_value then
-            query = query .. ", " .. post_charac_events.format_value(event)
-        else
-            query = query .. post_charac_events.format_value(event)
-            is_first_value = false
-        end
-    end
-
-    return query
-end
-
-function post_charac_events.format_value(event)
-    return string.format(
-            post_charac_events.value,
-            event.starting_date,
-            event.ending_date,
-            event.charac,
-            event.description
-    )
-end
-
-function post_charac_events.lacking_data(response, event)
+function post_charac_events.lacking_data(response, event, connection, env)
     response
             :statusCode(http.codes.BAD_REQUEST)
             :write(json.encode({ message = "Detected missing values in this entity", event = event }))
+    post_charac_events.close(connection, env)
 end
 
 function post_charac_events.character_not_found(response, connection, env)
     response
             :statusCode(http.codes.NOT_FOUND)
             :write(json.encode({ message = "Character not found!" }))
+    post_charac_events.close(connection, env)
+end
 
+function post_charac_events.close(connection, env)
     connection:close()
     env:close()
 end
