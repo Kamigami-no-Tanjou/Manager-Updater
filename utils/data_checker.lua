@@ -6,16 +6,15 @@
 local data_checker = {}
 
 function data_checker.ensure_model_compliance(entity, model, extra_function)
-    data_checker.ensure_nullable_compliance(entity, model, extra_function, nil)
+    for _,property in pairs(model.insert_property_order) do
+        if not model.properties[property].nullable and entity[property] == nil then error("nil value found!") end
+        entity[property] = extra_function(entity[property])
+    end
 end
 
 function data_checker.ensure_update_model_compliance(entity, model, extra_function)
-    data_checker.ensure_nullable_compliance(entity, model, extra_function, '%NULL%')
-end
-
-function data_checker.ensure_nullable_compliance(entity, generic_model, extra_function, nil_value)
-    for key, property in pairs(generic_model) do
-        if not property.nullable and entity[key] == nil_value then error("nil value found!") end
+    for key, property in pairs(model) do
+        if not property.nullable and entity[key] == "%NULL%" then error("nil value found!") end
         entity[key] = extra_function(entity[key])
     end
 end
