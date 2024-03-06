@@ -11,8 +11,12 @@ nation_leader = {
         leader = { format = tonumber },
         nation = { format = tonumber },
         lead_start_date = { format = tostring },
-        lead_end_date = { format = tostring }
-    }
+        lead_end_date = { format = tostring, nullable = true }
+    },
+
+    insert_property_order = { "leader", "nation", "lead_start_date", "lead_end_date" },
+
+    udpate_property_order = { "id", "leader", "nation", "lead_start_date", "lead_end_date" }
 }
 
 function nation_leader:new(mapped_fields)

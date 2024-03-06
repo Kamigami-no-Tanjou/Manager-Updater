@@ -9,7 +9,11 @@ sex = {
     properties = {
         id = { format = tonumber },
         name = { format = tostring }
-    }
+    },
+
+    insert_property_order = { "name" },
+
+    update_property_order = { "id", "name" }
 }
 
 function sex:new(mapped_fields)

@@ -9,11 +9,15 @@ map = {
     properties = {
         id = { format = tonumber },
         name = { format = tostring },
-        establishment_date = { format = tostring },
-        expiry_date = { format = tostring },
-        nation = { format = tonumber },
-        content = { format = tostring }
-    }
+        establishment_date = { format = tostring, nullable = true },
+        expiry_date = { format = tostring, nullable = true },
+        nation = { format = tonumber, nullable = true },
+        content = { format = tostring, nullable = true } -- Cannot be nullable, but this way will not be verified by the checker.
+    },
+
+    insert_property_order = { "name", "establishment_date", "expiry_date", "nation" },
+
+    update_property_order = { "id", "name", "establishment_date", "expiry_date", "nation" }
 }
 
 function map:new(mapped_fields)

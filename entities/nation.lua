@@ -11,9 +11,13 @@ nation = {
         name = { format = tostring },
         calendar = { format =  tonumber },
         foundation_date = { format = tostring },
-        destruction_date = { format = tostring },
+        destruction_date = { format = tostring, nullable = true },
         description = { format = tostring }
-    }
+    },
+
+    insert_property_order = { "name", "calendar", "foundation_date", "destruction_date", "description" },
+
+    update_property_ordre = { "id", "name", "calendar", "foundation_date", "destruction_date", "description" }
 }
 
 function nation:new(mapped_fields)

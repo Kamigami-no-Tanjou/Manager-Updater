@@ -11,7 +11,11 @@ link_charac_magic = {
         charac = { format = tonumber },
         magic = { format = tonumber },
         rank = { format = tonumber }
-    }
+    },
+
+    insert_property_order = { "charac", "magic", "rank" },
+
+    update_property_order = { "id", "charac", "magic", "rank" }
 }
 
 function link_charac_magic:new(mapped_fields)

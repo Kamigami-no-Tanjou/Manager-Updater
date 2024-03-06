@@ -10,7 +10,11 @@ link_elem_magic = {
         id = { format = tonumber },
         elem = { format = tonumber },
         magic = { format = tonumber }
-    }
+    },
+
+    insert_property_order = { "elem", "magic" },
+
+    update_property_order = { "id", "elem", "magic" }
 }
 
 function link_elem_magic:new(mapped_fields)

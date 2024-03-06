@@ -9,8 +9,12 @@ magic = {
     properties = {
         id = { format = tonumber },
         name = { format = tostring },
-        description = { format = tostring }
-    }
+        description = { format = tostring, nullable = true }
+    },
+
+    insert_property_order = { "name", "description" },
+
+    update_property_order = { "id", "name", "description" }
 }
 
 function magic:new(mapped_fields)
