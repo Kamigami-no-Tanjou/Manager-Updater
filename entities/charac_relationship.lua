@@ -10,9 +10,17 @@ charac_relationship = {
         id = { format = tonumber },
         from_charac = { format = tonumber },
         towards_charac = { format = tonumber },
-        family_status = { format = tonumber },
+        family_status = { format = tonumber, nullable = true },
         appreciation = { format = tonumber },
-        history = { format = tostring }
+        history = { format = tostring, nullable = true }
+    },
+
+    insert_property_order = {
+        "from_charac", "towards_charac", "family_status", "appreciation", "history"
+    },
+
+    update_property_order = {
+        "id", "from_charac", "towards_charac", "family_status", "appreciation", "history"
     }
 }
 
