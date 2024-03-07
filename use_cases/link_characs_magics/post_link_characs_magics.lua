@@ -9,7 +9,6 @@ local http = require('enums.http_facade')
 local prototype = require('entities.link_charac_magic')
 local escaper = require('utils.extra_function_escape')
 local query_builder = require('utils.query_builder')
-local logger = require('utils.logger')
 
 local post_link_characs_magics = {
     query = [[
@@ -44,7 +43,6 @@ function post_link_characs_magics.execute(request, response)
         post_link_characs_magics.lacking_data(response, query, connection, env)
         return
     end
-    logger.log(logger.levels.DEBUG, query)
     if not connection:execute(query) then
         post_link_characs_magics.foreign_value_not_found(response, connection, env)
         return
