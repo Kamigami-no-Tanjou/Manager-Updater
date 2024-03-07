@@ -34,6 +34,7 @@ local get_magics_use_case = require('use_cases.magics.get_magics')
 local post_magics_use_case = require('use_cases.magics.post_magics')
 -- maps
 local get_maps_use_case = require('use_cases.maps.get_maps')
+local post_maps_use_case = require('use_cases.maps.post_maps')
 -- nations
 local get_nations_use_case = require('use_cases.nations.get_nations')
 -- nation_leaders
@@ -63,6 +64,7 @@ routing.routes = {
     { "/magics", http.methods.GET, get_magics_use_case.execute, "get_magics", false },
     { "/magics", http.methods.POST, post_magics_use_case.execute, "post_magics", true },
     { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
+    { "/maps", http.methods.POST, post_maps_use_case.execute, "post_maps", true },
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
     { "/nation-leaders", http.methods.GET, get_nation_leaders_uses_case.execute, "get_nation_leaders", false },
     { "/sexes", http.methods.GET, get_sexes_use_case.execute, "get_sexes", false }
