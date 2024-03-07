@@ -40,6 +40,7 @@ local get_nations_use_case = require('use_cases.nations.get_nations')
 local post_nations_use_case = require('use_cases.nations.post_nations')
 -- nation_leaders
 local get_nation_leaders_uses_case = require('use_cases.nation_leaders.get_nation_leaders')
+local post_nation_leaders_uses_case = require('use_cases.nation_leaders.post_nation_leaders')
 -- sexes
 local get_sexes_use_case = require('use_cases.sexes.get_sexes')
 routing.routes = {
@@ -69,6 +70,7 @@ routing.routes = {
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
     { "/nations", http.methods.POST, post_nations_use_case.execute, "post_nations", true },
     { "/nation-leaders", http.methods.GET, get_nation_leaders_uses_case.execute, "get_nation_leaders", false },
+    { "/nation-leaders", http.methods.POST, post_nation_leaders_uses_case.execute, "post_nation_leaders", true },
     { "/sexes", http.methods.GET, get_sexes_use_case.execute, "get_sexes", false }
 }
 
