@@ -28,6 +28,7 @@ local get_links_characs_magics_use_case = require('use_cases.link_characs_magics
 local post_links_characs_magics_use_case = require('use_cases.link_characs_magics.post_link_characs_magics')
 -- link_elems_magics
 local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get_link_elems_magics')
+local post_links_elems_magics_use_case = require('use_cases.link_elems_magics.post_link_elems_magics')
 -- magics
 local get_magics_use_case = require('use_cases.magics.get_magics')
 -- maps
@@ -57,6 +58,7 @@ routing.routes = {
     { "/link-characs-magics", http.methods.GET, get_links_characs_magics_use_case.execute, "get_links_characs_magics", false },
     { "/link-characs-magics", http.methods.POST, post_links_characs_magics_use_case.execute, "post_links_characs_magics", true },
     { "/link-elems-magics", http.methods.GET, get_links_elems_magics_use_case.execute, "get_links_elems_magics", false },
+    { "/link-elems-magics", http.methods.POST, post_links_elems_magics_use_case.execute, "post_links_elems_magics", true },
     { "/magics", http.methods.GET, get_magics_use_case.execute, "get_magics", false },
     { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
