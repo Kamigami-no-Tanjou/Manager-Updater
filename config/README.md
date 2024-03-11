@@ -11,7 +11,7 @@ values to show you how you should fill those files.
 > On top of that, the format of the file doesn't really matter too much, as long as it is correct Lua.
 
 ## Database connection
-Database connection information are stored in the script name `database.lua`. Here is an example of
+Database connection information are stored in the script named `database.lua`. Here is an example of
 what it should look like, and what information it should contain.
 
 ```lua
