@@ -46,6 +46,7 @@ local delete_magics_use_case = require('use_cases.magics.delete_magics')
 local get_maps_use_case = require('use_cases.maps.get_maps')
 local post_maps_use_case = require('use_cases.maps.post_maps')
 local put_maps_use_case = require('use_cases.maps.put_maps')
+local delete_maps_use_case = require('use_cases.maps.delete_maps')
 -- nations
 local get_nations_use_case = require('use_cases.nations.get_nations')
 local post_nations_use_case = require('use_cases.nations.post_nations')
@@ -91,6 +92,7 @@ routing.routes = {
     { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
     { "/maps", http.methods.POST, post_maps_use_case.execute, "post_maps", true },
     { "/maps", http.methods.PUT, put_maps_use_case.execute, "put_maps", true },
+    { "/maps", http.methods.DELETE, delete_maps_use_case.execute, "delete_maps", true },
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
     { "/nations", http.methods.POST, post_nations_use_case.execute, "post_nations", true },
     { "/nations", http.methods.PUT, put_nations_use_case.execute, "put_nations", true },
