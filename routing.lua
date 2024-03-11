@@ -112,7 +112,7 @@ function routing.dispatch(request, response)
     for _,value in pairs(routing.routes) do
         local is_allowed = security.check_key(request, value[5])
 
-        if request:path() == value[1] and request:method() == value[2] and is_allowed then
+        if string.match(request:path(), value[1]) == request:path() and request:method() == value[2] and is_allowed then
             logger.log(logger.levels.INFO, "Dispatching received request to endpoint " .. value[4] .. "...")
             value[3](request, response)
             return
