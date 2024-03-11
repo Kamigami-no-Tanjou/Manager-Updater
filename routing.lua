@@ -36,6 +36,7 @@ local put_links_elems_magics_use_case = require('use_cases.link_elems_magics.put
 -- magics
 local get_magics_use_case = require('use_cases.magics.get_magics')
 local post_magics_use_case = require('use_cases.magics.post_magics')
+local put_magics_use_case = require('use_cases.magics.put_magics')
 -- maps
 local get_maps_use_case = require('use_cases.maps.get_maps')
 local post_maps_use_case = require('use_cases.maps.post_maps')
@@ -73,6 +74,7 @@ routing.routes = {
     { "/link-elems-magics", http.methods.PUT, put_links_elems_magics_use_case.execute, "put_links_elems_magics", true },
     { "/magics", http.methods.GET, get_magics_use_case.execute, "get_magics", false },
     { "/magics", http.methods.POST, post_magics_use_case.execute, "post_magics", true },
+    { "/magics", http.methods.PUT, put_magics_use_case.execute, "put_magics", true },
     { "/maps", http.methods.GET, get_maps_use_case.execute, "get_maps", false },
     { "/maps", http.methods.POST, post_maps_use_case.execute, "post_maps", true },
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
