@@ -7,6 +7,7 @@ local routing = {}
 local http = require('enums.http_facade')
 local logger = require('utils.logger')
 local security = require('utils.security')
+local route_match = require('enums.routing.route_match')
 
 local health_use_case = require('use_cases.server.health')
 local get_calendars_use_case = require('use_cases.calendars.get_calendars')
@@ -112,14 +113,14 @@ function routing.dispatch(request, response)
     routing.prepareResponse(response)
 
     for _,value in pairs(routing.routes) do
-        local is_allowed = security.check_key(request, value[5])
+        local route_matching = routing.check_route_match(request, value[1], value[2], value[5])
 
-        if string.match(request:path(), value[1]) == request:path() and request:method() == value[2] and is_allowed then
+        if route_matching == route_match.MATCHING then
             logger.log(logger.levels.INFO, "Dispatching received request to endpoint " .. value[4] .. "...")
             value[3](request, response)
             return
 
-        elseif request:path() == value[1] and request:method() == value[2] and not is_allowed then
+        elseif route_matching == route_match.UNAUTHORISED then
             logger.log(logger.levels.INFO, "Attempted to access " .. value[4] .. " route with no authentication")
             response
                     :statusCode(http.codes.UNAUTHORIZED)
@@ -145,6 +146,24 @@ end
 ---
 function routing.prepareResponse(response)
     response:addHeader("Content-Type", "application/json")
+end
+
+---
+--- Function that will check whether the request path corresponds to the given route.
+---
+--- @param request Request The request to check for route matching.
+--- @param route_regex string The regular expression to identify the route currently checked.
+--- @param route_method string The method of the route currently checked.
+--- @param requires_authentication boolean Whether the route requires authentication.
+---
+--- @return number Refer to the route_match enum for more info.
+---
+function routing.check_route_match(request, route_regex, route_method, requires_authentication)
+    if not string.match(request:path(), route_regex) == request:path() then return route_match.NO_MATCH end
+    if not request:method() == route_method then return route_match.NO_MATCH end
+    if not security.check_key(request, requires_authentication) then return route_match.UNAUTHORISED end
+
+    return route_match.MATCHING
 end
 
 return routing
