@@ -10,7 +10,7 @@ local escaper = require('utils.extra_function_escape')
 local query_builder = require('utils.query_builder')
 local errors = require('utils.errors')
 
-local put_characs_magics = {
+local put_link_characs_magics = {
     vocab = {
         table_name = "LINK_CharacsMagics",
         primary_key = { db = "ID", prop = "id" },
@@ -22,27 +22,27 @@ local put_characs_magics = {
     }
 }
 
-function put_characs_magics.execute(request, response)
+function put_link_characs_magics.execute(request, response)
     local connection, env = connector.create()
     if not connection then return end
     escaper.set_connection(connection)
 
-    local edited_characs_magics = json.decode(request:receiveBody())
+    local edited_links = json.decode(request:receiveBody())
     local queries = query_builder.create_update_queries(
-            put_characs_magics.vocab,
+            prototype.vocab,
             prototype,
-            edited_characs_magics,
+            edited_links,
             escaper
     )
 
     if type(queries) ~= "string" then
-        errors.incorrect_data(response, { charac = queries }, connection, env)
+        errors.incorrect_data(response, { link_charac_magic = queries }, connection, env)
         return
     end
     if not connection:execute(queries) then
         errors.foreign_value_not_found(
                 response,
-                { "character", "calendar", "class", "sex", "gender", "origin" },
+                { "charac", "magic", "link between charac and magic" },
                 connection,
                 env
         )
@@ -50,12 +50,12 @@ function put_characs_magics.execute(request, response)
     end
 
     response:sendOnlyHeaders()
-    put_characs_magics.close(connection, env)
+    put_link_characs_magics.close(connection, env)
 end
 
-function put_characs_magics.close(connection, env)
+function put_link_characs_magics.close(connection, env)
     connection:close()
     env:close()
 end
 
-return put_characs_magics
+return put_link_characs_magics
