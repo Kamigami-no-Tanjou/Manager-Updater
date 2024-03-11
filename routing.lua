@@ -51,6 +51,7 @@ local delete_maps_use_case = require('use_cases.maps.delete_maps')
 local get_nations_use_case = require('use_cases.nations.get_nations')
 local post_nations_use_case = require('use_cases.nations.post_nations')
 local put_nations_use_case = require('use_cases.nations.put_nations')
+local delete_nations_use_case = require('use_cases.nations.delete_nations')
 -- nation_leaders
 local get_nation_leaders_uses_case = require('use_cases.nation_leaders.get_nation_leaders')
 local post_nation_leaders_uses_case = require('use_cases.nation_leaders.post_nation_leaders')
@@ -96,6 +97,7 @@ routing.routes = {
     { "/nations", http.methods.GET, get_nations_use_case.execute, "get_nations", false },
     { "/nations", http.methods.POST, post_nations_use_case.execute, "post_nations", true },
     { "/nations", http.methods.PUT, put_nations_use_case.execute, "put_nations", true },
+    { "/nations", http.methods.DELETE, delete_nations_use_case.execute, "delete_nations", true },
     { "/nation-leaders", http.methods.GET, get_nation_leaders_uses_case.execute, "get_nation_leaders", false },
     { "/nation-leaders", http.methods.POST, post_nation_leaders_uses_case.execute, "post_nation_leaders", true },
     { "/nation-leaders", http.methods.PUT, put_nation_leaders_uses_case.execute, "put_nation_leaders", true },
