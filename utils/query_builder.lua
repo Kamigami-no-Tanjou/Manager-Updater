@@ -6,7 +6,14 @@
 local checker = require('utils.data_checker')
 local sqlize = require('utils.sqlize')
 
-local query_builder = {}
+local query_builder = {
+    update_query_skeleton = [[
+        UPDATE %s
+        SET
+            %s
+        WHERE %s = %s
+    ]]
+}
 
 function query_builder.create_insert_query(
         query_skeleton,
@@ -24,9 +31,9 @@ function query_builder.create_insert_query(
         end
 
         if not is_first_value then
-            query = query .. ", " .. query_builder.format_value(value_skeleton, entity, entity_prototype)
+            query = query .. ", " .. query_builder.format_insert_value(value_skeleton, entity, entity_prototype)
         else
-            query = query .. query_builder.format_value(value_skeleton, entity, entity_prototype)
+            query = query .. query_builder.format_insert_value(value_skeleton, entity, entity_prototype)
             is_first_value = false
         end
     end
@@ -34,17 +41,74 @@ function query_builder.create_insert_query(
     return query
 end
 
-function query_builder.format_value(value_skeleton, entity, entity_prototype)
+function query_builder.create_update_queries(
+        vocabulary,
+        entity_prototype,
+        entities,
+        escaper
+)
+    local queries
+
+    for _, entity in pairs(entities) do
+        if not pcall(checker.ensure_update_model_compliance, entity, entity_prototype.properties, escaper.apply) then
+            return entity
+        end
+
+        if queries ~= nil then
+            queries = queries .. "; " .. query_builder.create_update_query(vocabulary, entity, entity_prototype)
+        else
+            queries = query_builder.create_update_query(vocabulary, entity, entity_prototype)
+        end
+    end
+
+    return queries
+end
+
+function query_builder.create_update_query(vocabulary, entity, entity_prototype)
+    local values
+
+    for property_name, property in pairs(entity) do
+        if property_name ~= vocabulary.primary_key.prop then
+            local sql_value = query_builder.prepare_value(property, entity_prototype.properties[property_name].prepare)
+
+            if values ~= nil then
+                values = values .. ", " .. string.format("%s = %s", vocabulary.editable_columns[property_name], sql_value)
+            else
+                values = string.format("%s = %s", vocabulary.editable_columns[property_name], sql_value)
+            end
+        end
+    end
+
+    return string.format(
+            query_builder.update_query_skeleton,
+            vocabulary.table_name,
+            values,
+            vocabulary.primary_key.db,
+            entity[vocabulary.primary_key.prop]
+    )
+end
+
+function query_builder.format_insert_value(value_skeleton, entity, entity_prototype)
     local indexed_entity = {}
 
     for index,property_name in pairs(entity_prototype.insert_property_order) do
-        if entity_prototype.properties[property_name].prepare then
-            entity[property_name] = entity_prototype.properties[property_name].prepare(entity[property_name])
-        end
-        indexed_entity[index] = sqlize(entity[property_name])
+        indexed_entity[index] = query_builder.prepare_value(
+                entity[property_name],
+                entity_prototype.properties[property_name].prepare
+        )
     end
 
     return string.format(value_skeleton, unpack(indexed_entity))
+end
+
+function query_builder.prepare_value(property, prepare_function)
+    local value = property
+
+    if prepare_function ~= nil then
+        value = prepare_function(value)
+    end
+
+    return sqlize(value)
 end
 
 return query_builder
