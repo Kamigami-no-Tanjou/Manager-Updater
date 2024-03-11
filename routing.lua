@@ -20,6 +20,7 @@ local put_characs_use_case = require('use_cases.characs.put_characs')
 -- charac_relationships
 local get_charac_relationships_use_case = require('use_cases.charac_relationships.get_charac_relationships')
 local post_charac_relationships_use_case = require('use_cases.charac_relationships.post_charac_relationships')
+local put_charac_relationships_use_case = require('use_cases.charac_relationships.put_charac_relationships')
 -- classes; elems; family_statuses; genders
 local get_classes_use_case = require('use_cases.classes.get_classes')
 local get_elems_use_case = require('use_cases.elems.get_elems')
@@ -57,6 +58,7 @@ routing.routes = {
     { "/characs", http.methods.PUT, put_characs_use_case.execute, "put_characs", true },
     { "/charac-relationships", http.methods.GET, get_charac_relationships_use_case.execute, "get_charac_relationships", false },
     { "/charac-relationships", http.methods.POST, post_charac_relationships_use_case.execute, "post_charac_relationships", true },
+    { "/charac-relationships", http.methods.PUT, put_charac_relationships_use_case.execute, "put_charac_relationships", true },
     { "/classes", http.methods.GET, get_classes_use_case.execute, "get_classes", false },
     { "/elements", http.methods.GET, get_elems_use_case.execute, "get_elems", false },
     { "/family-statuses", http.methods.GET, get_family_statuses_use_case.execute, "get_family_statuses", false },
