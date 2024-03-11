@@ -20,12 +20,11 @@ local post_characs_use_case = require('use_cases.characs.post_characs')
 local put_characs_use_case = require('use_cases.characs.put_characs')
 local delete_characs_use_case = require('use_cases.characs.delete_characs')
 local post_charac_portrait = require('use_cases.characs.post_charac_portrait')
--- charac_relationships
+local delete_charac_portrait = require('use_cases.characs.delete_charac_portrait')
 local get_charac_relationships_use_case = require('use_cases.charac_relationships.get_charac_relationships')
 local post_charac_relationships_use_case = require('use_cases.charac_relationships.post_charac_relationships')
 local put_charac_relationships_use_case = require('use_cases.charac_relationships.put_charac_relationships')
 local delete_charac_relationships_use_case = require('use_cases.charac_relationships.delete_charac_relationships')
--- classes; elems; family_statuses; genders
 local get_classes_use_case = require('use_cases.classes.get_classes')
 local get_elems_use_case = require('use_cases.elems.get_elems')
 local get_family_statuses_use_case = require('use_cases.family_statuses.get_family_statuses')
@@ -34,17 +33,14 @@ local get_links_characs_magics_use_case = require('use_cases.link_characs_magics
 local post_links_characs_magics_use_case = require('use_cases.link_characs_magics.post_link_characs_magics')
 local put_links_characs_magics_use_case = require('use_cases.link_characs_magics.put_link_characs_magics')
 local delete_links_characs_magics_use_case = require('use_cases.link_characs_magics.delete_link_characs_magics')
--- link_elems_magics
 local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get_link_elems_magics')
 local post_links_elems_magics_use_case = require('use_cases.link_elems_magics.post_link_elems_magics')
 local put_links_elems_magics_use_case = require('use_cases.link_elems_magics.put_link_elems_magics')
 local delete_links_elems_magics_use_case = require('use_cases.link_elems_magics.delete_link_elems_magics')
--- magics
 local get_magics_use_case = require('use_cases.magics.get_magics')
 local post_magics_use_case = require('use_cases.magics.post_magics')
 local put_magics_use_case = require('use_cases.magics.put_magics')
 local delete_magics_use_case = require('use_cases.magics.delete_magics')
--- maps
 local get_maps_use_case = require('use_cases.maps.get_maps')
 local post_maps_use_case = require('use_cases.maps.post_maps')
 local put_maps_use_case = require('use_cases.maps.put_maps')
@@ -54,12 +50,10 @@ local get_nations_use_case = require('use_cases.nations.get_nations')
 local post_nations_use_case = require('use_cases.nations.post_nations')
 local put_nations_use_case = require('use_cases.nations.put_nations')
 local delete_nations_use_case = require('use_cases.nations.delete_nations')
--- nation_leaders
 local get_nation_leaders_uses_case = require('use_cases.nation_leaders.get_nation_leaders')
 local post_nation_leaders_uses_case = require('use_cases.nation_leaders.post_nation_leaders')
 local put_nation_leaders_uses_case = require('use_cases.nation_leaders.put_nation_leaders')
 local delete_nation_leaders_uses_case = require('use_cases.nation_leaders.delete_nation_leaders')
--- sexes
 local get_sexes_use_case = require('use_cases.sexes.get_sexes')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
@@ -74,6 +68,7 @@ routing.routes = {
     { "/characs", http.methods.PUT, put_characs_use_case.execute, "put_characs", true },
     { "/characs", http.methods.DELETE, delete_characs_use_case.execute, "delete_characs", true },
     { "/charac/%d+/portrait", http.methods.POST, post_charac_portrait.execute, "post_charac_portrait", true },
+    { "/charac/%d+/portrait", http.methods.DELETE, delete_charac_portrait.execute, "delete_charac_portrait", true },
     { "/charac-relationships", http.methods.GET, get_charac_relationships_use_case.execute, "get_charac_relationships", false },
     { "/charac-relationships", http.methods.POST, post_charac_relationships_use_case.execute, "post_charac_relationships", true },
     { "/charac-relationships", http.methods.PUT, put_charac_relationships_use_case.execute, "put_charac_relationships", true },
