@@ -5,29 +5,22 @@
 ---
 local json = require('lunajson')
 local connector = require('utils.database_connection')
-local checker = require('utils.data_checker')
-local http = require('enums.http_facade')
 local prototype = require('entities.charac_event')
-local sqlize = require('utils.sqlize')
 local escaper = require('utils.extra_function_escape')
+local query_builder = require('utils.query_builder')
+local errors = require('utils.errors')
 
 local put_charac_events = {
     vocab = {
-        id = "ID",
-        starting_date = "StartingDate",
-        ending_date = "EndingDate",
-        charac = "Charac",
-        description = "Description"
-    },
-
-    query = [[
-        UPDATE CharacEvents
-        SET
-            %s
-        WHERE ID = %s
-    ]],
-
-    value = "%s = %s"
+        table_name = "CharacEvents",
+        primary_key = { db = "ID", prop = "id" },
+        editable_columns = {
+            starting_date = "StartingDate",
+            ending_date = "EndingDate",
+            charac = "Charac",
+            description = "Description"
+        }
+    }
 }
 
 function put_charac_events.execute(request, response)
@@ -36,60 +29,29 @@ function put_charac_events.execute(request, response)
     escaper.set_connection(connection)
 
     local edited_events = json.decode(request:receiveBody())
-    local queries = {}
-    local query_index = 1
-    for _, event in pairs(edited_events) do
-        queries[query_index] = put_charac_events.create_query(response, event)
-        query_index = query_index + 1
-    end
-    if not queries then put_charac_events.close(connection, env); return end
+    local queries = query_builder.create_update_queries(
+            put_charac_events.vocab,
+            prototype,
+            edited_events,
+            escaper
+    )
 
-    for _, query in pairs(queries) do
-        if not connection:execute(query) then
-            put_charac_events.character_or_character_event_not_found(response, connection, env)
-            return
-        end
+    if type(queries) ~= "string" then
+        errors.incorrect_data(response, { event = queries }, connection, env)
+        return
+    end
+    if not connection:execute(queries) then
+        errors.foreign_value_not_found(
+                response,
+                { "character", "character event" },
+                connection,
+                env
+        )
+        return
     end
 
     response:sendOnlyHeaders()
     put_charac_events.close(connection, env)
-end
-
-function put_charac_events.create_query(response, edited_event)
-    local values
-
-    if not pcall(checker.ensure_update_model_compliance, edited_event, prototype.properties, escaper.apply) then
-        put_charac_events.lacking_data(response, edited_event)
-        return nil
-    end
-    for prop_name, prop_value in pairs(edited_event) do
-        if prop_name ~= "id" then
-            local sql_value = sqlize(prop_value)
-
-            if values ~= nil then -- not first property in the set part of the query
-                values = values .. ", " .. string.format(put_charac_events.value, put_charac_events.vocab[prop_name], sql_value)
-            else
-                values = string.format(put_charac_events.value, put_charac_events.vocab[prop_name], sql_value)
-            end
-        end
-    end
-
-    return string.format(put_charac_events.query, values, edited_event.id)
-end
-
-function put_charac_events.character_or_character_event_not_found(response, connection, env)
-    connection:rollback()
-    response
-            :statusCode(http.codes.NOT_FOUND)
-            :write(json.encode({ message = "Character not found!" }))
-
-    put_charac_events.close(connection, env)
-end
-
-function put_charac_events.lacking_data(response, event)
-    response
-            :statusCode(http.codes.BAD_REQUEST)
-            :write(json.encode({ message = "Detected missing values in this entity", event = event }))
 end
 
 function put_charac_events.close(connection, env)
