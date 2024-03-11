@@ -20,6 +20,7 @@ end
 
 local compact_tastes = function(table_tastes)
     if not table_tastes then return nil end
+    if not (type(table_tastes) == "table") then return table_tastes end
     local string_tastes
     local is_first_tatse = true
 
