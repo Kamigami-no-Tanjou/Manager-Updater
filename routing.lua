@@ -154,9 +154,9 @@ end
 --- @return number Refer to the route_match enum for more info.
 ---
 function routing.check_route_match(request, route_regex, route_method, requires_authentication)
-    if not string.match(request:path(), route_regex) == request:path() then return route_match.NO_MATCH end
-    if not request:method() == route_method then return route_match.NO_MATCH end
-    if not security.check_key(request, requires_authentication) then return route_match.UNAUTHORISED end
+    if not (string.match(request:path(), route_regex) == request:path()) then return route_match.NO_MATCH end
+    if not (request:method() == route_method) then return route_match.NO_MATCH end
+    if not (security.check_key(request, requires_authentication)) then return route_match.UNAUTHORISED end
 
     return route_match.MATCHING
 end
