@@ -36,6 +36,7 @@ local delete_links_characs_magics_use_case = require('use_cases.link_characs_mag
 local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get_link_elems_magics')
 local post_links_elems_magics_use_case = require('use_cases.link_elems_magics.post_link_elems_magics')
 local put_links_elems_magics_use_case = require('use_cases.link_elems_magics.put_link_elems_magics')
+local delete_links_elems_magics_use_case = require('use_cases.link_elems_magics.delete_link_elems_magics')
 -- magics
 local get_magics_use_case = require('use_cases.magics.get_magics')
 local post_magics_use_case = require('use_cases.magics.post_magics')
@@ -81,6 +82,7 @@ routing.routes = {
     { "/link-elems-magics", http.methods.GET, get_links_elems_magics_use_case.execute, "get_links_elems_magics", false },
     { "/link-elems-magics", http.methods.POST, post_links_elems_magics_use_case.execute, "post_links_elems_magics", true },
     { "/link-elems-magics", http.methods.PUT, put_links_elems_magics_use_case.execute, "put_links_elems_magics", true },
+    { "/link-elems-magics", http.methods.DELETE, delete_links_elems_magics_use_case.execute, "delete_links_elems_magics", true },
     { "/magics", http.methods.GET, get_magics_use_case.execute, "get_magics", false },
     { "/magics", http.methods.POST, post_magics_use_case.execute, "post_magics", true },
     { "/magics", http.methods.PUT, put_magics_use_case.execute, "put_magics", true },
