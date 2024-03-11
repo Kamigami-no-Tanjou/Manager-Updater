@@ -17,6 +17,7 @@ local delete_charac_events_use_case = require('use_cases.charac_events.delete_ch
 local get_characs_use_case = require('use_cases.characs.get_characs')
 local post_characs_use_case = require('use_cases.characs.post_characs')
 local put_characs_use_case = require('use_cases.characs.put_characs')
+local delete_characs_use_case = require('use_cases.characs.delete_characs')
 -- charac_relationships
 local get_charac_relationships_use_case = require('use_cases.charac_relationships.get_charac_relationships')
 local post_charac_relationships_use_case = require('use_cases.charac_relationships.post_charac_relationships')
@@ -62,6 +63,7 @@ routing.routes = {
     { "/characs", http.methods.GET, get_characs_use_case.execute, "get_characs", false },
     { "/characs", http.methods.POST, post_characs_use_case.execute, "post_characs", true },
     { "/characs", http.methods.PUT, put_characs_use_case.execute, "put_characs", true },
+    { "/characs", http.methods.DELETE, delete_characs_use_case.execute, "delete_characs", true },
     { "/charac-relationships", http.methods.GET, get_charac_relationships_use_case.execute, "get_charac_relationships", false },
     { "/charac-relationships", http.methods.POST, post_charac_relationships_use_case.execute, "post_charac_relationships", true },
     { "/charac-relationships", http.methods.PUT, put_charac_relationships_use_case.execute, "put_charac_relationships", true },
