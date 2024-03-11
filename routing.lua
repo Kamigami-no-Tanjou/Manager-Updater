@@ -31,6 +31,7 @@ local get_genders_use_case = require('use_cases.genders.get_genders')
 local get_links_characs_magics_use_case = require('use_cases.link_characs_magics.get_link_characs_magics')
 local post_links_characs_magics_use_case = require('use_cases.link_characs_magics.post_link_characs_magics')
 local put_links_characs_magics_use_case = require('use_cases.link_characs_magics.put_link_characs_magics')
+local delete_links_characs_magics_use_case = require('use_cases.link_characs_magics.delete_link_characs_magics')
 -- link_elems_magics
 local get_links_elems_magics_use_case = require('use_cases.link_elems_magics.get_link_elems_magics')
 local post_links_elems_magics_use_case = require('use_cases.link_elems_magics.post_link_elems_magics')
@@ -76,6 +77,7 @@ routing.routes = {
     { "/link-characs-magics", http.methods.GET, get_links_characs_magics_use_case.execute, "get_links_characs_magics", false },
     { "/link-characs-magics", http.methods.POST, post_links_characs_magics_use_case.execute, "post_links_characs_magics", true },
     { "/link-characs-magics", http.methods.PUT, put_links_characs_magics_use_case.execute, "put_links_characs_magics", true },
+    { "/link-characs-magics", http.methods.DELETE, delete_links_characs_magics_use_case.execute, "delete_links_characs_magics", true },
     { "/link-elems-magics", http.methods.GET, get_links_elems_magics_use_case.execute, "get_links_elems_magics", false },
     { "/link-elems-magics", http.methods.POST, post_links_elems_magics_use_case.execute, "post_links_elems_magics", true },
     { "/link-elems-magics", http.methods.PUT, put_links_elems_magics_use_case.execute, "put_links_elems_magics", true },
