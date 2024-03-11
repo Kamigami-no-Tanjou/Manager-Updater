@@ -56,6 +56,7 @@ local delete_nations_use_case = require('use_cases.nations.delete_nations')
 local get_nation_leaders_uses_case = require('use_cases.nation_leaders.get_nation_leaders')
 local post_nation_leaders_uses_case = require('use_cases.nation_leaders.post_nation_leaders')
 local put_nation_leaders_uses_case = require('use_cases.nation_leaders.put_nation_leaders')
+local delete_nation_leaders_uses_case = require('use_cases.nation_leaders.delete_nation_leaders')
 -- sexes
 local get_sexes_use_case = require('use_cases.sexes.get_sexes')
 routing.routes = {
@@ -101,6 +102,7 @@ routing.routes = {
     { "/nation-leaders", http.methods.GET, get_nation_leaders_uses_case.execute, "get_nation_leaders", false },
     { "/nation-leaders", http.methods.POST, post_nation_leaders_uses_case.execute, "post_nation_leaders", true },
     { "/nation-leaders", http.methods.PUT, put_nation_leaders_uses_case.execute, "put_nation_leaders", true },
+    { "/nation-leaders", http.methods.DELETE, delete_nation_leaders_uses_case.execute, "delete_nation_leaders", true },
     { "/sexes", http.methods.GET, get_sexes_use_case.execute, "get_sexes", false }
 }
 
