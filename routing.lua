@@ -8,6 +8,7 @@ local http = require('enums.http_facade')
 local logger = require('utils.logger')
 local security = require('utils.security')
 local route_match = require('enums.routing.route_match')
+local access_control = require('config.access_control')
 
 local health_use_case = require('use_cases.server.health')
 local get_calendars_use_case = require('use_cases.calendars.get_calendars')
@@ -55,6 +56,7 @@ local post_nation_leaders_uses_case = require('use_cases.nation_leaders.post_nat
 local put_nation_leaders_uses_case = require('use_cases.nation_leaders.put_nation_leaders')
 local delete_nation_leaders_uses_case = require('use_cases.nation_leaders.delete_nation_leaders')
 local get_sexes_use_case = require('use_cases.sexes.get_sexes')
+local options_use_case = require('use_cases.generic.options')
 routing.routes = {
     -- { "path", "http_method", function_to_call, "name", requires_authentication },
     { "/health", http.methods.GET, health_use_case.execute, "get_health", false },
@@ -103,6 +105,8 @@ routing.routes = {
     { "/nation-leaders", http.methods.PUT, put_nation_leaders_uses_case.execute, "put_nation_leaders", true },
     { "/nation-leaders", http.methods.DELETE, delete_nation_leaders_uses_case.execute, "delete_nation_leaders", true },
     { "/sexes", http.methods.GET, get_sexes_use_case.execute, "get_sexes", false }
+    -- MUST BE THE LAST!!
+    { ".*", http.methods.OPTIONS, options_use_case.execute, "get_options", false }
 }
 
 function routing.dispatch(request, response)
@@ -142,6 +146,10 @@ end
 ---
 function routing.prepareResponse(response)
     response:addHeader("Content-Type", "application/json")
+
+    if access_control.allow_origin then response:addHeader("Access-Control-Allow-Origin", access_control.allow_origin) end
+    if access_control.allow_methods then response:addHeader("Access-Control-Allow-Methods", access_control.allow_methods) end
+    if access_control.allow_headers then response:addHeader("Access-Control-Allow-Headers", access_control.allow_headers) end
 end
 
 ---

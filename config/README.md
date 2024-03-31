@@ -46,3 +46,23 @@ includes small and capital letters, numbers and special characters as well, and 
 > unpredictable passwords, encryption with salt and pepper is mandatory in order to keep systems
 > secure. But in our case, we only have one password, and we know it is secure, so there is no real
 > need for any encryption process.
+
+## Access control
+If you want/need your API to be called from another server, you might want to edit the access control
+parameters, that will be sent with the generic options response. To do that, create a file named
+`access_control.lua` at the root of the `config` directory, and give the follwing informations:
+
+```lua
+-- location: @root/config/access_control.lua
+
+return {
+    allow_origin = "*YOUR ALLOWED ORIGINS ('*' only is not advised)",
+    allow_methods = "GET, POST, PUT, DELETE, OPTIONS, ...",
+    allow_headers = "Your, Headers-To, Allow"
+}
+```
+
+> **NOTE:**  
+> None of the aforementioned parameters are mandatory, so you can chose to remove some of the values
+> displayed in the example. The presence of this file is mandatory though, as it is required in a 
+> use case, which would make the program crash if not having it.
