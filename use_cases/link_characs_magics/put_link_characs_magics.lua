@@ -29,7 +29,7 @@ function put_link_characs_magics.execute(request, response)
 
     local edited_links = json.decode(request:receiveBody())
     local queries = query_builder.create_update_queries(
-            prototype.vocab,
+            put_link_characs_magics.vocab,
             prototype,
             edited_links,
             escaper
