@@ -6,5 +6,7 @@
 local pegasus = require('pegasus')
 local routing = require('routing')
 
-local server = pegasus:new({}) -- creating a server with the default configuration
+local server = pegasus:new({
+    port = arg[1] or '9090'
+}) -- creating a server with the default configuration
 server:start(routing.dispatch)
